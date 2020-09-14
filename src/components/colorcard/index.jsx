@@ -8,8 +8,8 @@ function BL(props) {
   const { color, description, text, className, style } = props;
   return (
     <div className={className} style={style}>
-      <div>{color}</div>
-      <div>{text}</div>
+      <div className="rgb-code">{color}</div>
+      <div className="group-name">{text}</div>
       {description ? <div className="description">{description}</div> : ""}
     </div>
   );
@@ -26,22 +26,30 @@ export function varLookup(...params) {
 
 export const Block = styled(BL)`
   position: relative;
-  border-radius: 1rem;
+  border-radius: var(--border-radius);
   background-color: ${(props) => varLookup(props.group, props.var)};
   color: ${(props) => varLookup(props.group, props.var, "text")};
   margin: 20px;
   padding: 1rem;
   text-align: left;
+
   font-family: var(--font-code);
   transform: ${(props) =>
     props.variant === "small" ? "translate(-100px,10px)" : ""};
   box-shadow: ${(props) =>
-    props.variant === "small" ? "5px 5px 10px black" : ""};
+    props.variant === "small" ? "5px 5px 10px var(--color-shadow)" : ""};
 
+  .rgb-code {
+    text-transform: uppercase;
+  }
+  .group-name {
+    text-transform: capitalize;
+  }
   .description {
     margin-top: 20px;
     font-family: var(--font-description);
     font-size: 1.5rem;
+    text-transform: none;
   }
 `;
 
@@ -50,54 +58,63 @@ function C(props) {
   const [mainColor] = colors;
   const otherColors = colors.slice(1);
 
-  return mainColor ? (
+  return (
     <div className={className}>
-      <Block
-        color={mainColor.main}
-        group={mainColor.name}
-        var="main"
-        text="Main"
-        description={lorem}
-        style={{
-          gridColumn: "1",
-          gridRow: "1/6"
-        }}
-      />
-      <Block
-        color={mainColor.complement}
-        group={mainColor.name}
-        var="complement"
-        text="Complementary"
-        variant="small"
-      />
-      {otherColors.map((color) => {
-        return (
-          <>
-            <Block
-              color={color.main}
-              group={color.name}
-              var="main"
-              text="main"
-              variant="small"
-            />
-            <Block
-              color={color.main}
-              group={color.name}
-              var="complement"
-              text="Complementary"
-              variant="small"
-            />
-          </>
-        );
-      })}
+      {mainColor ? (
+        <div className="block-grid">
+          <Block
+            color={mainColor.main}
+            group={mainColor.name}
+            var="main"
+            text="Main"
+            description={lorem}
+            style={{
+              gridColumn: "1",
+              gridRow: "1/6"
+            }}
+          />
+          <Block
+            color={mainColor.complement}
+            group={mainColor.name}
+            var="complement"
+            text="Complementary"
+            variant="small"
+          />
+          {otherColors.map((color) => {
+            return (
+              <>
+                <Block
+                  color={color.main}
+                  group={color.name}
+                  var="main"
+                  text="main"
+                  variant="small"
+                />
+                <Block
+                  color={color.main}
+                  group={color.name}
+                  var="complement"
+                  text="Complementary"
+                  variant="small"
+                />
+              </>
+            );
+          })}
+        </div>
+      ) : (
+        ""
+      )}
     </div>
-  ) : (
-    ""
   );
 }
 
 export const Card = styled(C)`
   display: grid;
-  grid-template-columns: 400px 200px;
-  grid-auto-rows: minmax(100px, auto);
+  place-items: center center;
+
+  .block-grid {
+    display: grid;
+    grid-template-columns: 400px 200px;
+    grid-auto-rows: minmax(100px, auto);
+  }
 `;

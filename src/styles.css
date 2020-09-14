@@ -2,6 +2,8 @@
 :root {
   --font-code: "Fira Code", monospace;
   --font-description: "Noto Serif", serif;
+  --border-radius: 15px;
+  --color-shadow: #292929;
 }
 
 body {
