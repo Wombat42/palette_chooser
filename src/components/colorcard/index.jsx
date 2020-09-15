@@ -32,13 +32,7 @@ export const Block = styled(BL)`
   margin: 20px;
   padding: 1rem;
   text-align: left;
-
   font-family: var(--font-code);
-  transform: ${(props) =>
-    props.variant === "small" ? "translate(-100px,10px)" : ""};
-  box-shadow: ${(props) =>
-    props.variant === "small" ? "5px 5px 10px var(--color-shadow)" : ""};
-
   .rgb-code {
     text-transform: uppercase;
   }
@@ -53,6 +47,21 @@ export const Block = styled(BL)`
   }
 `;
 
+export const MainBlock = styled(Block)`
+  transform: unset;
+  grid-column: main-start / main-end;
+  grid-row: 1 / 7;
+  z-index: 0;
+`;
+
+export const SmallBlock = styled(Block)`
+  box-shadow: 5px 5px 10px var(--color-shadow);
+  transform: translate(0px, 20px);
+  grid-column: sample-start / sample-end;
+  grid-row: 1;
+  z-index: 10;
+`;
+
 function C(props) {
   const { className, colors } = props;
   const [mainColor] = colors;
@@ -62,40 +71,40 @@ function C(props) {
     <div className={className}>
       {mainColor ? (
         <div className="block-grid">
-          <Block
+          <MainBlock
             color={mainColor.main}
             group={mainColor.name}
             var="main"
             text="Main"
             description={lorem}
-            style={{
-              gridColumn: "1",
-              gridRow: "1/6"
-            }}
           />
-          <Block
+          <SmallBlock
             color={mainColor.complement}
             group={mainColor.name}
             var="complement"
             text="Complementary"
             variant="small"
           />
-          {otherColors.map((color) => {
+          {otherColors.map((color, index) => {
             return (
               <>
-                <Block
+                <SmallBlock
                   color={color.main}
                   group={color.name}
                   var="main"
                   text="main"
-                  variant="small"
+                  style={{
+                    gridRow: `${(index + 1) * 2}`
+                  }}
                 />
-                <Block
+                <SmallBlock
                   color={color.main}
                   group={color.name}
                   var="complement"
                   text="Complementary"
-                  variant="small"
+                  style={{
+                    gridRow: `${(index + 1) * 2 + 1}`
+                  }}
                 />
               </>
             );
@@ -114,7 +123,7 @@ export const Card = styled(C)`
 
   .block-grid {
     display: grid;
-    grid-template-columns: 400px 200px;
-    grid-auto-rows: minmax(100px, auto);
+    grid-template-columns: [main-start] 300px [sample-start] 100px [main-end] 100px [sample-end];
+    grid-template-rows: [first-line] repeat(auto-fill, 100px) [last-line];
   }
 `;
