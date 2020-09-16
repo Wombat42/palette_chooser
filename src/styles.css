@@ -4,10 +4,12 @@
   --font-description: "Noto Serif", serif;
   --border-radius: 15px;
   --color-shadow: #292929;
+  --background-color: #ffffff;
 }
 
 body {
   margin: 0;
+  background-color: var(--background-color);
 }
 
 .App {

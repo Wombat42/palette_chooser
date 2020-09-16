@@ -61,7 +61,8 @@ export const SmallBlock = styled(Block)`
 `;
 
 function C(props) {
-  const { className, colors } = props;
+  const { className, colors = [] } = props;
+  console.log(("colors": colors), typeof colors);
   const [mainColor] = colors;
   const otherColors = colors.slice(1);
 

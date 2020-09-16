@@ -9,14 +9,7 @@ export const Header = styled.div`
   font-weight: 500;
   text-transform: uppercase;
   position: sticky;
-  top:0;
+  top: 0;
   z-index: 30;
-`;
-
-export const Row = styled.div`
-  height: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-column-gap: 0px;
-  width: 100vw;
+  box-shadow: 0px 2px 3px var(--color-shadow);
 `;
