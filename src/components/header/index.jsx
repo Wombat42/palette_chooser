@@ -8,6 +8,9 @@ export const Header = styled.div`
   font-family: var(--font-code);
   font-weight: 500;
   text-transform: uppercase;
+  position: sticky;
+  top:0;
+  z-index: 30;
 `;
 
 export const Row = styled.div`

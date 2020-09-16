@@ -48,17 +48,15 @@ export const Block = styled(BL)`
 `;
 
 export const MainBlock = styled(Block)`
-  transform: unset;
-  grid-column: main-start / main-end;
-  grid-row: 1 / 7;
+  grid-area: main;
+  grid-row: 1/7;
   z-index: 0;
 `;
 
 export const SmallBlock = styled(Block)`
   box-shadow: 5px 5px 10px var(--color-shadow);
   transform: translate(0px, 20px);
-  grid-column: sample-start / sample-end;
-  grid-row: 1;
+  grid-area: sample;
   z-index: 10;
 `;
 
@@ -83,27 +81,31 @@ function C(props) {
             group={mainColor.name}
             var="complement"
             text="Complementary"
-            variant="small"
+            style={{
+              gridRow: 1
+            }}
           />
           {otherColors.map((color, index) => {
             return (
               <>
                 <SmallBlock
+                  key={index + 1}
                   color={color.main}
                   group={color.name}
                   var="main"
                   text="main"
                   style={{
-                    gridRow: `${(index + 1) * 2}`
+                    gridRow: (index + 1) * 2
                   }}
                 />
                 <SmallBlock
+                  key={(index + 1) * 100}
                   color={color.main}
                   group={color.name}
                   var="complement"
                   text="Complementary"
                   style={{
-                    gridRow: `${(index + 1) * 2 + 1}`
+                    gridRow: (index + 1) * 2 + 1
                   }}
                 />
               </>
@@ -124,6 +126,8 @@ export const Card = styled(C)`
   .block-grid {
     display: grid;
     grid-template-columns: [main-start] 300px [sample-start] 100px [main-end] 100px [sample-end];
-    grid-template-rows: [first-line] repeat(auto-fill, 100px) [last-line];
+    grid-template-rows:
+      [main-start] repeat(auto-fill, 1fr)
+      [main-end];
   }
 `;

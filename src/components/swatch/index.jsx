@@ -1,6 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+//import { SketchPicker } from "react-color";
 
 function SW({ color, className }) {
   return <div className={className}>{color}</div>;
