@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import styled from "styled-components";
 
 const lorem =
@@ -60,9 +60,39 @@ export const SmallBlock = styled(Block)`
   z-index: 10;
 `;
 
-function C(props) {
+function ColorList(props) {
+  const { colors = [] } = props;
+  return colors.length
+    ? colors.map((color, index) => {
+        return (
+          <React.Fragment key={color.main + color.name}>
+            <SmallBlock
+              color={color.main}
+              group={color.name}
+              var="main"
+              text={color.name}
+              style={{
+                gridRow: (index + 1) * 2
+              }}
+            />
+            <SmallBlock
+              color={color.main}
+              group={color.name}
+              var="complement"
+              text={`${color.name} Complementary`}
+              style={{
+                gridRow: (index + 1) * 2 + 1
+              }}
+            />
+          </React.Fragment>
+        );
+      })
+    : "";
+}
+
+function CardPrim(props) {
   const { className, colors = [] } = props;
-  console.log(("colors": colors), typeof colors);
+  console.log("colors", colors, typeof colors);
   const [mainColor] = colors;
   const otherColors = colors.slice(1);
 
@@ -86,32 +116,7 @@ function C(props) {
               gridRow: 1
             }}
           />
-          {otherColors.map((color, index) => {
-            return (
-              <>
-                <SmallBlock
-                  key={index + 1}
-                  color={color.main}
-                  group={color.name}
-                  var="main"
-                  text={color.name}
-                  style={{
-                    gridRow: (index + 1) * 2
-                  }}
-                />
-                <SmallBlock
-                  key={(index + 1) * 100}
-                  color={color.main}
-                  group={color.name}
-                  var="complement"
-                  text={`${color.name} Complementary`}
-                  style={{
-                    gridRow: (index + 1) * 2 + 1
-                  }}
-                />
-              </>
-            );
-          })}
+          <ColorList colors={otherColors} />
         </div>
       ) : (
         ""
@@ -120,7 +125,7 @@ function C(props) {
   );
 }
 
-export const Card = styled(C)`
+export const Card = styled(CardPrim)`
   display: grid;
   place-items: center center;
 
