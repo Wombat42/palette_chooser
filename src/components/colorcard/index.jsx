@@ -94,7 +94,7 @@ function C(props) {
                   color={color.main}
                   group={color.name}
                   var="main"
-                  text="main"
+                  text={color.name}
                   style={{
                     gridRow: (index + 1) * 2
                   }}
@@ -104,7 +104,7 @@ function C(props) {
                   color={color.main}
                   group={color.name}
                   var="complement"
-                  text="Complementary"
+                  text={`${color.name} Complementary`}
                   style={{
                     gridRow: (index + 1) * 2 + 1
                   }}

@@ -1,10 +1,57 @@
-import * as React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-//import { SketchPicker } from "react-color";
+import { ChromePicker } from "react-color";
 
-function SW({ color, className }) {
-  return <div className={className}>{color}</div>;
+function PCKR(props) {
+  const {
+    show,
+    onClose = () => {},
+    onChange = () => {},
+    className,
+    color
+  } = props;
+  return show ? (
+    <div className={className}>
+      <div onClick={onClose} />
+      <ChromePicker color={color} onChange={onChange} />
+    </div>
+  ) : null;
+}
+
+const Picker = styled(PCKR)`
+  position: absolute;
+  z-index: 50;
+
+  & > div {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+  }
+`;
+
+function SW({ color, className, onChange = () => {} }) {
+  const [showPicker, setShowPicker] = useState(false);
+  return (
+    <>
+      <div
+        className={className}
+        onClick={() => {
+          setShowPicker(true);
+        }}
+      >
+        {color}
+      </div>
+      <Picker
+        show={showPicker}
+        color={color}
+        onChange={onChange}
+        onClose={() => setShowPicker(false)}
+      />
+    </>
+  );
 }
 
 export const Swatch = styled(SW)`

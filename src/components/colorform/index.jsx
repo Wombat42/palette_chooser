@@ -5,11 +5,16 @@ import { Swatch } from "../swatch";
 import { colorLookup } from "../colorcard";
 import { readableColor, complement, adjustHue } from "polished";
 
-function ColorSet({ colors }) {
+function ColorSet({ colors, onChange = () => {} }) {
   return (
     <Row>
-      <Swatch color={colors.main} readableColor={colors.readable} />
       <Swatch
+        onChange={onChange}
+        color={colors.main}
+        readableColor={colors.readable}
+      />
+      <Swatch
+        onChange={onChange}
         color={colors.complement}
         readableColor={colors.complementReadable}
       />
@@ -75,12 +80,9 @@ function CF(props) {
     if (!lastColor.current) {
       let colors = [
         getColors("main", mainColor),
-        getColors("b", mainColor, 120),
-        getColors("c", mainColor, -120)
+        getColors("secondary-a", mainColor, 120),
+        getColors("secondary-b", mainColor, -120)
       ];
-
-      console.log(colors);
-
       setColors(colors);
       setVariableStyles(colors);
       lastColor.current = colors;
@@ -95,7 +97,13 @@ function CF(props) {
         <LeftSide>color form</LeftSide>
         <RightSide>
           {colors.map((colorSet) => {
-            return <ColorSet colors={colorSet} key={colorSet.main} />;
+            return (
+              <ColorSet
+                colors={colorSet}
+                key={colorSet.main}
+                onChange={(event) => console.log(event)}
+              />
+            );
           })}
         </RightSide>
       </div>
@@ -106,6 +114,6 @@ function CF(props) {
 export const ColorForm = styled(CF)`
   width: 100%;
   display: grid;
-  grid-template-columns: minmax(200px, 400px) auto;
+  grid-template-columns: minmax(200px, 400px) minmax(300px, auto);
   background-color: var(--background-color);
 `;
