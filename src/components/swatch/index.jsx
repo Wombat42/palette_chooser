@@ -31,7 +31,7 @@ const Picker = styled(PCKR)`
   z-index: 50;
   border: 2px solid blue;
 
-  & > .cover {
+  .cover {
     position: fixed;
     top: 0px;
     right: 0px;
