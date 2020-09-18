@@ -27,7 +27,6 @@ function ColorSet({ colors, onChange = () => {} }) {
 }
 
 export const Row = styled.div`
-  height: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-column-gap: 0px;
@@ -76,11 +75,13 @@ function getColors(name, color, rotation = 0) {
 }
 
 function CF(props) {
-  const { className, color: mainColor, colorsChange } = props;
+  const { className, color: initColor, colorsChange } = props;
   const [colors, setColors] = useState([]);
   const lastColors = useRef();
 
   useEffect(() => {
+    const [mainColorGroup] = colors;
+    let mainColor = mainColorGroup?.main || initColor;
     if (lastColors.current !== mainColor) {
       lastColors.current = mainColor;
       let colors = [
@@ -94,7 +95,7 @@ function CF(props) {
         colorsChange([...colors]);
       }
     }
-  }, [mainColor, colors, lastColors, colorsChange]);
+  }, [initColor, colors, lastColors, colorsChange]);
   return (
     <Header>
       <div className={className}>
