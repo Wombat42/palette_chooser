@@ -62,6 +62,7 @@ export const SmallBlock = styled(Block)`
 
 function ColorList(props) {
   const { colors = [] } = props;
+  console.log(typeof colors, colors);
   return colors.length
     ? colors.map((color, index) => {
         return (
@@ -92,10 +93,8 @@ function ColorList(props) {
 
 function CardPrim(props) {
   const { className, colors = [] } = props;
-  console.log("colors", colors, typeof colors);
   const [mainColor] = colors;
   const otherColors = colors.slice(1);
-
   return (
     <div className={className}>
       {mainColor ? (

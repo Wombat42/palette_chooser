@@ -4,6 +4,7 @@ import { Header } from "../header";
 import { Swatch } from "../swatch";
 import { colorLookup } from "../colorcard";
 import { readableColor, complement, adjustHue } from "polished";
+import { CompactPicker } from "react-color";
 
 function ColorSet({ colors, onChange = () => {} }) {
   return (
@@ -11,11 +12,15 @@ function ColorSet({ colors, onChange = () => {} }) {
       <Swatch
         onChange={onChange}
         color={colors.main}
+        name="main"
+        group={colors.name}
         readableColor={colors.readable}
       />
       <Swatch
         onChange={onChange}
         color={colors.complement}
+        group={colors.name}
+        name="complement"
         readableColor={colors.complementReadable}
       />
     </Row>
@@ -74,10 +79,11 @@ function getColors(name, color, rotation = 0) {
 function CF(props) {
   const { className, color: mainColor, colorsChange } = props;
   const [colors, setColors] = useState([]);
+  const lastColors = useRef();
 
-  const lastColor = useRef();
   useEffect(() => {
-    if (!lastColor.current) {
+    if (lastColors.current !== mainColor) {
+      lastColors.current = mainColor;
       let colors = [
         getColors("main", mainColor),
         getColors("secondary-a", mainColor, 120),
@@ -85,12 +91,11 @@ function CF(props) {
       ];
       setColors(colors);
       setVariableStyles(colors);
-      lastColor.current = colors;
       if (typeof colorsChange === "function") {
         colorsChange([...colors]);
       }
     }
-  }, [mainColor, colors, lastColor, colorsChange]);
+  }, [mainColor, colors, lastColors, colorsChange]);
   return (
     <Header>
       <div className={className}>
@@ -101,7 +106,15 @@ function CF(props) {
               <ColorSet
                 colors={colorSet}
                 key={colorSet.main}
-                onChange={(event) => console.log(event)}
+                onChange={(event) => {
+                  const tColors = [...colors];
+                  const colorToChange = tColors.find(
+                    (c) => c.name === event.group
+                  );
+                  colorToChange[event.name] = event.newColor;
+                  setColors(tColors);
+                  setVariableStyles(tColors);
+                }}
               />
             );
           })}

@@ -32,7 +32,7 @@ const Picker = styled(PCKR)`
   }
 `;
 
-function SW({ color, className, onChange = () => {} }) {
+function SW({ color, className, name, group, onChange = () => {} }) {
   const [showPicker, setShowPicker] = useState(false);
   return (
     <>
@@ -47,7 +47,10 @@ function SW({ color, className, onChange = () => {} }) {
       <Picker
         show={showPicker}
         color={color}
-        onChange={onChange}
+        onChange={(event) => {
+          console.log("picker", event);
+          onChange({ color, newColor: event.hex, name, group });
+        }}
         onClose={() => setShowPicker(false)}
       />
     </>
