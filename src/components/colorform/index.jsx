@@ -4,7 +4,6 @@ import { Header } from "../header";
 import { Swatch } from "../swatch";
 import { colorLookup } from "../colorcard";
 import { readableColor, complement, adjustHue } from "polished";
-import { CompactPicker } from "react-color";
 
 function ColorSet({ colors, onChange = () => {} }) {
   return (
@@ -40,7 +39,7 @@ function LeftSide(props) {
 }
 
 function RightSide(props) {
-  const { className, children, colors } = props;
+  const { className, children } = props;
   return <div className={className}>{children}</div>;
 }
 
