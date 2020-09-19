@@ -2,12 +2,10 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { ChromePicker } from "react-color";
-
 function PCKR(props) {
   const {
     show,
-    onClose = () => {
-    },
+    onClose = () => {},
     onChange = () => {},
     className,
     color
@@ -21,7 +19,7 @@ function PCKR(props) {
           onClose();
         }}
       />
-      <ChromePicker color={color} onChange={onChange} />
+      <ChromePicker color={color} onChange={onChange} onClick={(event) => {}} />
     </div>
   ) : null;
 }
@@ -46,8 +44,7 @@ function SW({ color, className, name, group, onChange = () => {} }) {
   return (
     <div
       className={className}
-      onClick={() => {
-        console.log("open color");
+      onClick={(event) => {
         setShowPicker(true);
       }}
     >
@@ -56,11 +53,9 @@ function SW({ color, className, name, group, onChange = () => {} }) {
         show={showPicker}
         color={color}
         onChange={(event) => {
-          console.log("color select", event);
           onChange({ color, newColor: event.hex, name, group });
         }}
         onClose={() => {
-          console.log("close");
           setShowPicker(false);
         }}
       />
@@ -69,7 +64,7 @@ function SW({ color, className, name, group, onChange = () => {} }) {
 }
 
 export const Swatch = styled(SW)`
-  background-color: ${(props) => props.color};
+  background-color: ${(props) => props.colorVar};
   color: ${(props) => props.readableColor};
   display: table-cell;
   padding: 10px;

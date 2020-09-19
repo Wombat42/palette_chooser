@@ -10,7 +10,6 @@ export default function App() {
       <ColorForm
         color={"#2A1D94"}
         colorsChange={(newColors) => {
-          console.log("colors", newColors);
           setColors(newColors);
         }}
       />

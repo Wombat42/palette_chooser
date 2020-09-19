@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { Header } from "../header";
 import { Swatch } from "../swatch";
-import { colorLookup } from "../colorcard";
+import { colorLookup, varLookup } from "../colorcard";
 import { readableColor, complement, adjustHue } from "polished";
 
 function ColorSet({ colors, onChange = () => {} }) {
@@ -11,16 +11,18 @@ function ColorSet({ colors, onChange = () => {} }) {
       <Swatch
         onChange={onChange}
         color={colors.main}
+        colorVar={varLookup(colors.name, "main")}
         name="main"
         group={colors.name}
-        readableColor={colors.readable}
+        readableColor={varLookup(colors.name, "main", "text")}
       />
       <Swatch
         onChange={onChange}
         color={colors.complement}
+        colorVar={varLookup(colors.name, "complement")}
         group={colors.name}
         name="complement"
-        readableColor={colors.complementReadable}
+        readableColor={varLookup(colors.name, "complement", "text")}
       />
     </Row>
   );
@@ -77,7 +79,7 @@ function getColors(name, color, rotation = 0) {
 function CF(props) {
   const { className, color: initColor, colorsChange } = props;
   const [colors, setColors] = useState([]);
-  const lastColors = useRef();
+  const lastColors = useRef(false);
 
   useEffect(() => {
     const [mainColorGroup] = colors;
@@ -101,11 +103,11 @@ function CF(props) {
       <div className={className}>
         <LeftSide>color form</LeftSide>
         <RightSide>
-          {colors.map((colorSet) => {
+          {colors.map((colorSet, index) => {
             return (
               <ColorSet
                 colors={colorSet}
-                key={colorSet.main}
+                key={colorSet.group}
                 onChange={(event) => {
                   const tColors = [...colors];
                   const colorToChange = tColors.find(

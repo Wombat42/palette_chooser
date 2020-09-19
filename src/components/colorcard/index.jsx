@@ -62,7 +62,6 @@ export const SmallBlock = styled(Block)`
 
 function ColorList(props) {
   const { colors = [] } = props;
-  console.log(typeof colors, colors);
   return colors.length
     ? colors.map((color, index) => {
         return (
