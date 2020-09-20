@@ -54,6 +54,7 @@ export const MainBlock = styled(Block)`
 `;
 
 export const SmallBlock = styled(Block)`
+  height: 95px;
   box-shadow: 5px 5px 10px var(--color-shadow);
   transform: translate(0px, 20px);
   grid-area: sample;

@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const Header = styled.div`
-  width: 100vw;
   display: flex;
   flex-direction: column;
   place-items: center;

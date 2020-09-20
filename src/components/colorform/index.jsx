@@ -107,7 +107,7 @@ function CF(props) {
             return (
               <ColorSet
                 colors={colorSet}
-                key={colorSet.group}
+                key={index}
                 onChange={(event) => {
                   const tColors = [...colors];
                   const colorToChange = tColors.find(

@@ -3,7 +3,8 @@
   --font-code: "Fira Code", monospace;
   --font-description: "Noto Serif", serif;
   --border-radius: 15px;
-  --color-shadow: #292929;
+  --color-shadow: #2423239f;
+  --color-app-shadow: #ccc9c9;
   --background-color: #ffffff;
 }
 
@@ -15,6 +16,10 @@ body {
 .App {
   font-family: sans-serif;
   text-align: center;
+  border-radius: 3px;
+  margin: 0 auto;
+  width: min(800px, 1000px);
+  box-shadow: 5px 5px 10px var(--color-app-shadow);
 }
 
 div {
