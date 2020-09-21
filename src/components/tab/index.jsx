@@ -12,37 +12,54 @@ function T(props) {
   }, [children, names]);
   return (
     <div className={className}>
-      {tabNames.map((name, index) => (
-        <div
-          key={index}
-          className={`tab ${index === selected ? "selected" : ""}`}
-        >
-          <div>{name}</div>
-          {index === selected && index < children.length ? (
-            <div>{children[index]}</div>
-          ) : (
-            ""
-          )}
-        </div>
-      ))}
+      <div className="tab-strip">
+        {tabNames.map((name, index) => (
+          <div
+            onClick={(event) => {
+              event.preventDefault();
+              setSelected(index);
+            }}
+            key={index}
+            className={`tab-strip-heading ${
+              index === selected ? "selected" : ""
+            }`}
+          >
+            {name}
+          </div>
+        ))}
+      </div>
+      <div className="tab-content">
+        {children[selected] ? children[selected] : ""}
+      </div>
     </div>
   );
 }
 
 export const Tab = styled(T)`
-  display: flex;
-  flex-direction: row;
-  justify-content: start;
-  margin-top: 20px;
-
-  .tab {
-    margin-left: 10px;
+  margin-top: 5px;
+  .tab-strip {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: start;
+    background-color: var(--color-accent-dark);
+    padding: 10px;
+  }
+
+  .tab-strip-heading {
+    font-size: 1.25rem;
+    margin-left: 20px;
+    padding: 10px;
+    text-transform: capitalize;
+    color: var(--color-accent-light);
+  }
+
+  .tab-content {
   }
 
   .selected {
-    color: green;
+    color: var(--color-text-contrast);
+    border: 1px solid var(--color-accent-middle);
+    background: var(--color-accent-middle);
+    border-radius: 5px;
   }
 `;
